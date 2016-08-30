@@ -1,0 +1,23 @@
+{
+  "visual": {
+    "name": "testCustomVizV120",
+    "displayName": "test custom viz v120",
+    "guid": "PBI_CV_F39FBAB0_3363_46DB_B68A_B522063E7241",
+    "visualClassName": "Visual",
+    "version": "1.0.0",
+    "description": "",
+    "supportUrl": "",
+    "gitHubUrl": ""
+  },
+  "apiVersion": "1.2.0",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "assets": {
+    "icon": "assets/icon.png"
+  },
+  "externalJS": [],
+  "style": "style/visual.less",
+  "capabilities": "capabilities.json"
+}
