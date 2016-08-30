@@ -26,18 +26,36 @@
 
 module powerbi.extensibility.visual {
     export class Visual implements IVisual {
-        private target: HTMLElement;
-        private updateCount: number;
+        private updateCountContainer: JQuery;
+        private categoryList: JQuery;
+        private updateCount: number = 0;
 
         constructor(options: VisualConstructorOptions) {
-            console.log('Visual constructor', options);
-            this.target = options.element;
-            this.updateCount = 0;
+            this.updateCountContainer = $('<div>');
+            this.categoryList = $('<ul>');
+            let categoryListContainer = $('<div>').append('<h3>Categories</h3>').append(this.categoryList);
+
+            $(options.element)
+                //Display jquery version in visual
+                .append(`<p>JQuery Version: <em>${$.fn.jquery}</em></p>`)
+                //Display lodash version in visual
+                .append(`<p>Lodash Version: <em>${_.VERSION}</em></p>`)
+                //Add container for update count
+                .append(this.updateCountContainer)
+                //add container for category list
+                .append(categoryListContainer);
         }
 
         public update(options: VisualUpdateOptions) {
-            console.log('Visual update', options);
-            this.target.innerHTML = `<p>Update count: <em>${(this.updateCount++)}</em></p>`;
+            //Display update count
+            this.updateCountContainer.html(`<p>Update count: <em>${(this.updateCount++)}</em></p>`)
+                        
+            //Use lodash to safely get the categories
+            let categories = _.get<string[]>(options, 'dataViews.0.categorical.categories.0.values') || [];
+
+            //Display list of categories
+            let categoryListItems = categories.map(c => $('<li>').text(c));
+            this.categoryList.empty().append(categoryListItems);
         }
     }
 }
